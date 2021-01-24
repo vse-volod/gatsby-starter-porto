@@ -11,7 +11,8 @@
 
 Minimalistic Gatsby theme for digital creators
 
-[Demo](https://porto.gatsbytemplates.io/)
+[Demo](https://porto.gatsbytemplates.io/) | 
+[Buy](https://gum.co/gatsby-theme-porto)
 
 ## Features
 
@@ -30,6 +31,7 @@ Minimalistic Gatsby theme for digital creators
 ### Using Starter
 
 This will generate a new themed site to use Gatsby Theme Porto with default content and pages.
+Clone starter from [this repo](https://github.com/vse-volod/gatsby-starter-porto)
 
 From current directory, run:
 
