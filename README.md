@@ -11,7 +11,8 @@
 
 Minimalistic Gatsby theme for digital creators
 
-[Demo](https://porto.gatsbytemplates.io/)
+[Demo](https://porto.gatsbytemplates.io/) | 
+[Buy](https://gum.co/gatsby-theme-porto)
 
 ## Features
 
