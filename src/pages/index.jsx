@@ -14,7 +14,7 @@ const Index = ({ data }) => {
   const posts = data.blog?.nodes;
   const portfolio = data.portfolio?.nodes;
   const author = data.site.siteMetadata?.author;
-  const portrait = data?.portrait?.childImageSharp?.fluid;
+  const portrait = data?.portrait?.childImageSharp?.gatsbyImageData;
 
   return (
     <Layout>
@@ -33,7 +33,7 @@ const Index = ({ data }) => {
           const {
             title, subtitle, description, slug,
           } = project;
-          const images = project.images.map((img) => img.childImageSharp.fluid);
+          const images = project.images.map((img) => img.childImageSharp.gatsbyImageData);
           return (
             <ProjectSection
               key={slug}
@@ -78,7 +78,7 @@ const Index = ({ data }) => {
                 key={slug}
                 title={title}
                 description={description}
-                image={image.childImageSharp.fluid}
+                image={image.childImageSharp.gatsbyImageData}
                 link={`/blog${slug}`}
               />
             );
@@ -91,69 +91,55 @@ const Index = ({ data }) => {
 
 export default Index;
 
-export const mainPageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-        author {
-          name
-        }
+export const mainPageQuery = graphql`{
+  site {
+    siteMetadata {
+      title
+      author {
+        name
       }
     }
-    portrait: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
-      childImageSharp {
-        fluid(maxWidth: 380, quality: 97) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
+  }
+  portrait: file(absolutePath: {regex: "/profile-pic.jpg/"}) {
+    childImageSharp {
+      gatsbyImageData(width: 380, quality: 97, layout: CONSTRAINED)
     }
-    blog: allSitePost(
-      sort: { 
-        fields: [date], order: DESC }, 
-        filter: {
-          posttype: {eq: "blog"}
-        }
-        limit: 3
-    ) {
-      nodes {
-        excerpt
-        slug
-        date(formatString: "MMMM DD, YYYY")
-        title
-        description
-        image {
-          childImageSharp {
-            fluid(maxWidth: 320, quality: 97) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
-      }
-    }
-    portfolio: allSitePost(
-      sort: { 
-        fields: [date], order: DESC 
-      }, 
-      filter: {
-        posttype: {eq: "project"}
-      }
-    ) {
-      nodes {
-        excerpt
-        slug
-        date(formatString: "MMMM DD, YYYY")
-        title
-        subtitle
-        description
-        images {
-          childImageSharp {
-            fluid(maxWidth: 1175, quality: 97) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
+  }
+  blog: allSitePost(
+    sort: {fields: [date], order: DESC}
+    filter: {posttype: {eq: "blog"}}
+    limit: 3
+  ) {
+    nodes {
+      excerpt
+      slug
+      date(formatString: "MMMM DD, YYYY")
+      title
+      description
+      image {
+        childImageSharp {
+          gatsbyImageData(width: 320, quality: 97, layout: CONSTRAINED)
         }
       }
     }
   }
+  portfolio: allSitePost(
+    sort: {fields: [date], order: DESC}
+    filter: {posttype: {eq: "project"}}
+  ) {
+    nodes {
+      excerpt
+      slug
+      date(formatString: "MMMM DD, YYYY")
+      title
+      subtitle
+      description
+      images {
+        childImageSharp {
+          gatsbyImageData(quality: 97, layout: FULL_WIDTH)
+        }
+      }
+    }
+  }
+}
 `;
